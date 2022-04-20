@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: default
 title: "nbb sentiment"
 date: 2022-04-19
 categories: code
