@@ -6,14 +6,15 @@ categories: code
 tags: nbbjs gcp
 ---
 
-[nbb](https://github.com/babashka/nbb) brings clojure scripting to nodejs environments.  We've been building clojurescript programs for nodejs for sometime, but `nbb` is interesting for a few reasons.
+[nbb](https://github.com/babashka/nbb) brings clojure scripting to nodejs environments.  Although we've
+been building clojurescript programs for nodejs for a while now, `nbb` is different.
 
-* cljs files do not get compiled to js (nbb is an interpreter).  If you're making a serverless function, or a script, the cljs files are distributed directly.
-* macros are not evaluated at compile time, as in clojurescript, so macros feel more natural
-* really nice support for working with the npm ecosystem
-* a simple and intuituive repl experience
+* cljs files are never compiled to js (nbb is an interpreter).  If you're making a serverless function, or a script, the cljs files are packaged.
+* macros are not evaluated at compile time, as in clojurescript. This feels more natural if you're accustomed to clojure.
+* easy to `require` and use npm packages
+* simple and intuituive repl experience
 
-I decided to see what this would look like with a `@google-cloud` module.  Start an npm project with the following.
+I decided to try this out with a `@google-cloud` module.  Create an npm project with the following.
 
 ```bash
 npm install -g nbb
@@ -24,7 +25,7 @@ npm install @google-cloud/language
 npx nbb nrepl-server
 ```
 
-Start an editor and connect your repl.  Evaluate the following namespace.  Create an `app.cljs` file with the following contents.
+Start an editor and connect your repl.  Create an `app.cljs` file with the contents below and evaluate the namespace.
 
 ```clj
 (ns app
@@ -38,21 +39,26 @@ Start an editor and connect your repl.  Evaluate the following namespace.  Creat
   (p/then 
     (.analyzeSentiment 
       language-client 
-      #js {:document #js {:content "I am angry" :type "PLAIN_TEXT"}}) 
+      #js {:document #js {:content "I am not angry" :type "PLAIN_TEXT"}}) 
     #(pprint (js->clj %)))
   #(println %))
 ```
 
-This will fail if your nodejs session can not authenticate.  However, the `@google-cloud/language` module will search your local environment for `application-default` credentials.  You can create an `application-default` login using gcloud.
+This will fail if your nodejs session can not authenticate.  The `@google-cloud/language` module
+will search your local environment for `application-default` credentials, so it's straight forward to
+login using gcloud. Once you've logged in, you can evaluate your namespace above again, and you should
+see a sentiment analysis result from GCP.
 
 ```bash
 gcloud auth application-default login
 npx nbb app.cljs
 ```
 
-You should see a sentiment analysis performed on your document.  This is not at different from just running the following.
+This assumes that the Natural Language apis are enabled in your current gcloud google project.
+
+Incidentally, this is the same as running the following gcloud command.
 
 ```bash
-gcloud ml language analyze-sentiment --content="I am angry" 
+gcloud ml language analyze-sentiment --content="I am not angry" 
 ```
 
