@@ -2,6 +2,7 @@
 layout: post
 title: "nbb sentiment"
 date: 2022-04-19
+categories: code
 tags: nbbjs gcp
 ---
 
