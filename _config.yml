@@ -28,9 +28,10 @@ twitter_username: slimslenders
 github_username:  slimslenderslacks
 
 # Build settings
-theme: jekyll-theme-tactile
+remote_theme: pages-themes/tactile@v0.2.0
 plugins:
   - jekyll-feed
+  - jekyll-remote-theme # add this line to the plugins list if you already have one
 
 # Exclude from processing.
 # The following items will not be processed, by default.
