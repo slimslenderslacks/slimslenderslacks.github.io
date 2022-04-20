@@ -1,7 +1,9 @@
+---
 layout: post
 title: "nbb sentiment"
 date: 2022-04-19
-categories: nbbjs gcp
+tags: nbbjs gcp
+---
 
 [nbb](https://github.com/babashka/nbb) brings clojure scripting to nodejs environments.  We've been building clojurescript programs for nodejs for sometime, but `nbb` is interesting for a few reasons.
 
@@ -42,14 +44,14 @@ Start an editor and connect your repl.  Evaluate the following namespace.  Creat
 
 This will fail if your nodejs session can not authenticate.  However, the `@google-cloud/language` module will search your local environment for `application-default` credentials.  You can create an `application-default` login using gcloud.
 
-```
+```bash
 gcloud auth application-default login
 npx nbb app.cljs
 ```
 
 You should see a sentiment analysis performed on your document.  This is not at different from just running the following.
 
-```
+```bash
 gcloud ml language analyze-sentiment --content="I am angry" 
 ```
 
