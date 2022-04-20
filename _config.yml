@@ -28,7 +28,7 @@ twitter_username: slimslenders
 github_username:  slimslenderslacks
 
 # Build settings
-theme: minima
+theme: jekyll-theme-tactile
 plugins:
   - jekyll-feed
 
